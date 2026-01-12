@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+    /* FONDO VERDE PARA CROMA KEY */
+    body { background-color: #00FF00; margin: 0; overflow: hidden; }
+
+    /* TU CSS ORIGINAL */
+    .controller.ds4 {
+        background: url(https://imgur.com/fLKAl5x.gif);
+        height: 598px; width: 806px;
+        position: relative;
+    }
+    .ds4.disconnected { background: url(https://imgur.com/NofW228.png); }
+    .ds4.disconnected div { display: none; }
+    .ds4 .triggers { width: 588px; height: 90px; position: absolute; left: 110px; }
+    .ds4 .trigger { width: 99px; height: 100%; background: url(https://imgur.com/6vO7PMr.png); opacity: 0; }
+    .ds4 .trigger.left { position: absolute; left: 2.4px; top: 1px; }
+    .ds4 .trigger.right { position: absolute; left: 483.4px; top: 1px; background-position-x: 99px; }
+    .ds4 .bumper { width: 99px; height: 27px; background: url(https://imgur.com/jADiChB.png) no-repeat; opacity: 0; }
+    .ds4 .bumpers { position: absolute; width: 584px; height: 23px; left: 111px; top: 93px; }
+    .ds4 .bumper.pressed { opacity: 1; }
+    .ds4 .bumper.left { float: left; }
+    .ds4 .bumper.right { float: right; transform: rotateY(180deg); }
+    .ds4 .touchpad { width: 262px; height: 151px; position: absolute; left: 272px; top: 122px; }
+    .ds4 .touchpad.pressed { background: url(ps4-assets/touchpad.png) no-repeat center; background-size: contain; } /* Ajuste por si falta imagen */
+    .ds4 .meta { width: 42px; height: 42px; position: absolute; left: 382px; bottom: 216px; }
+    .ds4 .meta.pressed { background: url(ps4-assets/meta.svg) no-repeat center; }
+    .ds4 .arrows { position: absolute; width: 352px; height: 46px; top: 142px; left: 227px; }
+    .ds4 .back, .ds4 .start { background: url(); width: 28px; height: 46px; opacity: 0; }
+    .ds4 .back.pressed, .ds4 .start.pressed { opacity: 1; }
+    .ds4 .back { float: left; }
+    .ds4 .start { float: right; background-position: 28px 0; }
+    .ds4 .abxy { position: absolute; width: 170px; height: 171px; top: 138px; left: 556px; }
+    .ds4 .button { position: absolute; width: 55px; height: 55px; background: url(https://imgur.com/MZNLif9.png); }
+    .ds4 .button.pressed { background-position-y: 55px; }
+    .ds4 .a { background-position: 0 0; bottom: 0; left: 58px; }
+    .ds4 .b { background-position: -56px 0; top: 62px; right: 4px; }
+    .ds4 .x { background-position: -112px 0; top: 61px; left: 2px; }
+    .ds4 .y { background-position: 55px 0; left: 54px; top: 7px; }
+    .ds4 .sticks { position: absolute; width: 361px; height: 105px; top: 275px; left: 228px; }
+    .ds4 .stick { position: absolute; background: url(https://imgur.com/0i3dnwf.png); height: 100px; width: 100px; }
+    .ds4 .stick.pressed.left { background-position-x: -99px; }
+    .ds4 .stick.pressed.right { background-position-x: -198px; }
+    .ds4 .stick.left { top: 0; left: 10px; }
+    .ds4 .stick.right { top: calc(100% - 105px); left: calc(100% - 115px); }
+    .ds4 .dpad { position: absolute; width: 125px; height: 126px; top: 181px; left: 92px; }
+    .ds4 .face { background: url(https://imgur.com/WNF93NX.png); position: absolute; }
+    .ds4 .face.up, .ds4 .face.down, .ds4 .face.left, .ds4 .face.right { width: 55px; height: 55px; }
+    .ds4 .face.up { left: 44px; top: -15px; background-position: -52px 0px; }
+    .ds4 .face.down { left: 48px; top: 60px; bottom: 0; background-position: 0px 0; }
+    .ds4 .face.left { top: 24px; left: 5px; background-position: 115px 0; }
+    .ds4 .face.right { top: 21px; right: -12px; background-position: 55px 0; }
+    .ds4 .face.pressed { background-position-y: 52px; }
+</style>
+</head>
+<body>
+
+<div class="controller ds4">
+    <div class="triggers"><div class="trigger left"></div><div class="trigger right"></div></div>
+    <div class="bumpers"><div class="bumper left"></div><div class="bumper right"></div></div>
+    <div class="touchpad"></div><div class="meta"></div>
+    <div class="arrows"><div class="back"></div><div class="start"></div></div>
+    <div class="abxy">
+        <div class="button a"></div><div class="button b"></div>
+        <div class="button x"></div><div class="button y"></div>
+    </div>
+    <div class="dpad">
+        <div class="face up"></div><div class="face down"></div>
+        <div class="face left"></div><div class="face right"></div>
+    </div>
+    <div class="sticks"><div class="stick left"></div><div class="stick right"></div></div>
+</div>
+
+<script>
+/* JS MOTOR DE JUEGO */
+const buttonsMap = {
+    0: '.button.a', 1: '.button.b', 2: '.button.x', 3: '.button.y',
+    4: '.bumper.left', 5: '.bumper.right', 6: '.trigger.left', 7: '.trigger.right',
+    8: '.back', 9: '.start', 10: '.stick.left', 11: '.stick.right',
+    12: '.face.up', 13: '.face.down', 14: '.face.left', 15: '.face.right',
+    16: '.meta', 17: '.touchpad'
+};
+
+function updateLoop() {
+    const gamepads = navigator.getGamepads ? navigator.getGamepads() : [];
+    
+    // Escanear todos los puertos USB
+    for (let i = 0; i < gamepads.length; i++) {
+        const gp = gamepads[i];
+        if (gp) {
+            // Botones
+            for (const [index, selector] of Object.entries(buttonsMap)) {
+                const el = document.querySelector(selector);
+                if (el) {
+                    const btn = gp.buttons[index];
+                    if (btn && btn.pressed) {
+                        el.classList.add('pressed');
+                        if (index == 6 || index == 7) el.style.opacity = btn.value;
+                    } else {
+                        el.classList.remove('pressed');
+                        if (index == 6 || index == 7) el.style.opacity = 0;
+                    }
+                }
+            }
+            // Sticks
+            const leftStick = document.querySelector('.stick.left');
+            if (leftStick) leftStick.style.transform = `translate(${gp.axes[0] * 20}px, ${gp.axes[1] * 20}px)`;
+            const rightStick = document.querySelector('.stick.right');
+            if (rightStick) rightStick.style.transform = `translate(${gp.axes[2] * 20}px, ${gp.axes[3] * 20}px)`;
+        }
+    }
+    requestAnimationFrame(updateLoop);
+}
+requestAnimationFrame(updateLoop);
+</script>
+
+</body>
+</html>
