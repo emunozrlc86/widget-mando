@@ -1,88 +1,94 @@
-/* Forzar que el fondo de la página sea transparente */
-body { background-color: transparent !important; }
-
-/* 1. EL MANDO (FONDO) */
+/* 1. AJUSTES GENERALES */
+/* Ocultamos el mando original por si acaso */
 .controller.ds4 {
-    /* Tu imagen de fondo del mando morado */
-    background: url(https://imgur.com/fLKAl5x.gif) !important;
-    /* Forzamos el tamaño para que coincida con tu imagen */
+    background: url(https://imgur.com/fLKAl5x.gif) no-repeat center !important;
+    background-size: contain !important;
+    /* Forzamos que el contenedor tenga el tamaño de tu imagen */
     width: 806px !important;
     height: 598px !important;
-    /* Ajustamos la posición para centrarlo si es necesario */
-    background-size: contain !important;
-    background-repeat: no-repeat !important;
 }
 
-/* 2. LOS BOTONES (X, O, Cuadrado, Triángulo) */
+/* 2. MOVER BOTONES DE LA CARA (X, O, Cuadrado, Triángulo) */
+/* Este bloque mueve todo el grupo de botones */
+.ds4 .abxy {
+    position: absolute !important;
+    /* Ajusta estos valores si todo el grupo está desviado */
+    top: 159px !important; 
+    left: 567px !important;
+    width: 170px !important;
+    height: 170px !important;
+}
+
+/* Ajuste individual de cada botón dentro del grupo */
 .ds4 .button {
-    /* Tu imagen de botones */
     background: url(https://imgur.com/MZNLif9.png) !important;
     width: 55px !important;
     height: 55px !important;
 }
+.ds4 .a { bottom: 0px !important; left: 58px !important; }  /* X */
+.ds4 .b { top: 58px !important; right: 0px !important; }    /* Círculo */
+.ds4 .x { top: 58px !important; left: 0px !important; }     /* Cuadrado */
+.ds4 .y { top: 0px !important; left: 58px !important; }     /* Triángulo */
 
-/* Ajuste fino de posiciones de botones para que calcen en tu mando */
-.ds4 .a { bottom: 35px !important; left: 58px !important; } /* X */
-.ds4 .b { top: 62px !important; right: 0px !important; }    /* Circulo */
-.ds4 .x { top: 61px !important; left: 2px !important; }     /* Cuadrado */
-.ds4 .y { top: 7px !important; left: 54px !important; }     /* Triangulo */
 
-/* Estados Presionados */
-.ds4 .button.pressed {
-    background-position-y: 55px !important; /* Mueve la imagen para mostrar el botón hundido */
-    margin-top: 5px !important; /* Efecto visual de hundimiento */
+/* 3. MOVER EL D-PAD (Flechas) */
+.ds4 .dpad {
+    position: absolute !important;
+    top: 181px !important; /* Sube o baja todo el D-pad aquí */
+    left: 92px !important; /* Mueve a izq o derecha todo el D-pad */
 }
 
-/* 3. LOS STICKS (Palancas) */
-.ds4 .stick {
-    background: url(https://imgur.com/0i3dnwf.png) !important;
-    width: 100px !important;
-    height: 100px !important;
-}
-
-/* Posición de los sticks */
-.ds4 .stick.left { left: 10px !important; top: 0px !important; }
-.ds4 .stick.right { right: 10px !important; bottom: 0px !important; }
-
-/* 4. EL DPAD (Flechas) */
+/* Imágenes del D-PAD */
 .ds4 .face {
     background: url(https://imgur.com/WNF93NX.png) !important;
 }
-/* Coordenadas del D-PAD */
-.ds4 .face.up { background-position: -52px 0px !important; }
-.ds4 .face.down { background-position: 0px 0px !important; }
-.ds4 .face.left { background-position: 115px 0px !important; }
-.ds4 .face.right { background-position: 55px 0px !important; }
+/* Posición interna de las flechas */
+.ds4 .face.up { top: -15px !important; left: 44px !important; }
+.ds4 .face.down { bottom: 0px !important; left: 48px !important; }
+.ds4 .face.left { top: 24px !important; left: 5px !important; }
+.ds4 .face.right { top: 21px !important; right: -12px !important; }
 
-.ds4 .face.pressed {
-    background-position-y: 52px !important; /* Efecto presionado */
+
+/* 4. MOVER LOS STICKS (Palancas) */
+.ds4 .sticks {
+    position: absolute !important;
+    top: 308px !important;  /* <--- JUEGA CON ESTE VALOR PARA SUBIR/BAJAR STICKS */
+    left: 228px !important; /* <--- JUEGA CON ESTE VALOR PARA IZQ/DER STICKS */
+    width: 361px !important;
+    height: 105px !important;
 }
 
+.ds4 .stick {
+    background: url(https://imgur.com/0i3dnwf.png) !important;
+    width: 100px !important; /* Tamaño de la palanca */
+    height: 100px !important;
+}
+
+/* Separación entre las dos palancas */
+.ds4 .stick.left { left: 0px !important; }
+.ds4 .stick.right { right: 0px !important; }
+
+
 /* 5. GATILLOS Y BUMPERS (L1, R1, L2, R2) */
+.ds4 .bumpers {
+    top: 94px !important; /* Posición vertical de L1/R1 */
+    left: 109px !important;
+    width: 588px !important;
+}
 .ds4 .bumper {
     background: url(https://imgur.com/jADiChB.png) no-repeat !important;
     width: 99px !important;
     height: 27px !important;
 }
 
+.ds4 .triggers {
+    top: 0px !important; /* Posición vertical de L2/R2 */
+    left: 109px !important;
+    width: 588px !important;
+}
 .ds4 .trigger {
     background: url(https://imgur.com/6vO7PMr.png) !important;
     width: 99px !important;
-    /* Ajuste para que no se vea cortado */
-    background-size: cover !important; 
-}
-
-/* 6. TOUCHPAD */
-.ds4 .touchpad {
-    /* Ocultamos el touchpad por defecto de GPV si molesta, o ponemos el tuyo */
-    opacity: 0 !important; 
-}
-.ds4 .touchpad.pressed {
-    opacity: 1 !important;
-    background: url(ps4-assets/touchpad.svg) no-repeat center !important; /* Si tienes imagen propia ponla aquí */
-}
-
-/* OCULTAR COSAS QUE NO NECESITAMOS */
-.ds4.disconnected {
-    background: url(https://imgur.com/NofW228.png) !important;
+    height: 100% !important;
+    background-size: cover !important;
 }
