@@ -1,88 +1,107 @@
-/* 1. AJUSTES GENERALES */
-/* Ocultamos el mando original por si acaso */
+/* === CONFIGURACIÓN BASE === */
+body { background-color: transparent !important; }
+
 .controller.ds4 {
+    /* Tu imagen de fondo (Mando PS5 Morado) */
     background: url(https://imgur.com/fLKAl5x.gif) no-repeat center !important;
     background-size: contain !important;
-    /* Forzamos que el contenedor tenga el tamaño de tu imagen */
     width: 806px !important;
     height: 598px !important;
 }
 
-/* 2. MOVER BOTONES DE LA CARA (X, O, Cuadrado, Triángulo) */
-/* Este bloque mueve todo el grupo de botones */
+/* === OCULTAR ETIQUETAS MOLESTAS (L2, R2, Player) === */
+.ds4 .trigger:after, .ds4 .trigger:before,
+.ds4 .bumper:after, .ds4 .bumper:before,
+.ds4 .quadrant { 
+    content: "" !important; 
+    display: none !important; 
+}
+
+/* === 1. GRUPO DE BOTONES (X, O, Cuadrado, Triángulo) === */
 .ds4 .abxy {
     position: absolute !important;
-    /* Ajusta estos valores si todo el grupo está desviado */
-    top: 159px !important; 
-    left: 567px !important;
+    /* En el PS5 están más a la derecha y arriba que en el PS4 */
+    top: 155px !important;   
+    left: 575px !important;  
     width: 170px !important;
     height: 170px !important;
 }
 
-/* Ajuste individual de cada botón dentro del grupo */
 .ds4 .button {
     background: url(https://imgur.com/MZNLif9.png) !important;
     width: 55px !important;
     height: 55px !important;
 }
+
+/* Ajuste individual para separar los botones (el PS5 es más espacioso) */
 .ds4 .a { bottom: 0px !important; left: 58px !important; }  /* X */
-.ds4 .b { top: 58px !important; right: 0px !important; }    /* Círculo */
-.ds4 .x { top: 58px !important; left: 0px !important; }     /* Cuadrado */
+.ds4 .b { top: 58px !important; right: -5px !important; }   /* Círculo (más a la derecha) */
+.ds4 .x { top: 58px !important; left: -5px !important; }    /* Cuadrado (más a la izq) */
 .ds4 .y { top: 0px !important; left: 58px !important; }     /* Triángulo */
 
-
-/* 3. MOVER EL D-PAD (Flechas) */
-.ds4 .dpad {
-    position: absolute !important;
-    top: 181px !important; /* Sube o baja todo el D-pad aquí */
-    left: 92px !important; /* Mueve a izq o derecha todo el D-pad */
+.ds4 .button.pressed {
+    background-position-y: 55px !important;
+    margin-top: 5px !important;
 }
 
-/* Imágenes del D-PAD */
+/* === 2. CRUCETA / D-PAD === */
+.ds4 .dpad {
+    position: absolute !important;
+    /* En el PS5 está más a la izquierda */
+    top: 181px !important;
+    left: 85px !important; 
+    width: 125px !important;
+    height: 126px !important;
+}
+
 .ds4 .face {
     background: url(https://imgur.com/WNF93NX.png) !important;
 }
-/* Posición interna de las flechas */
+
 .ds4 .face.up { top: -15px !important; left: 44px !important; }
 .ds4 .face.down { bottom: 0px !important; left: 48px !important; }
-.ds4 .face.left { top: 24px !important; left: 5px !important; }
-.ds4 .face.right { top: 21px !important; right: -12px !important; }
+.ds4 .face.left { top: 24px !important; left: 0px !important; }   /* Más afuera */
+.ds4 .face.right { top: 21px !important; right: -5px !important; } /* Más afuera */
 
+.ds4 .face.pressed {
+    background-position-y: 52px !important;
+}
 
-/* 4. MOVER LOS STICKS (Palancas) */
+/* === 3. PALANCAS (STICKS) === */
 .ds4 .sticks {
     position: absolute !important;
-    top: 308px !important;  /* <--- JUEGA CON ESTE VALOR PARA SUBIR/BAJAR STICKS */
-    left: 228px !important; /* <--- JUEGA CON ESTE VALOR PARA IZQ/DER STICKS */
+    /* El DualSense tiene los sticks un poco más abajo y separados */
+    top: 315px !important;  
+    left: 228px !important; 
     width: 361px !important;
     height: 105px !important;
 }
 
 .ds4 .stick {
     background: url(https://imgur.com/0i3dnwf.png) !important;
-    width: 100px !important; /* Tamaño de la palanca */
+    width: 100px !important;
     height: 100px !important;
 }
 
-/* Separación entre las dos palancas */
-.ds4 .stick.left { left: 0px !important; }
-.ds4 .stick.right { right: 0px !important; }
+.ds4 .stick.left { left: -10px !important; }  /* Separar stick izq */
+.ds4 .stick.right { right: -10px !important; } /* Separar stick der */
 
-
-/* 5. GATILLOS Y BUMPERS (L1, R1, L2, R2) */
+/* === 4. GATILLOS Y BUMPERS === */
+/* L1 y R1 */
 .ds4 .bumpers {
-    top: 94px !important; /* Posición vertical de L1/R1 */
+    top: 94px !important;
     left: 109px !important;
     width: 588px !important;
 }
 .ds4 .bumper {
     background: url(https://imgur.com/jADiChB.png) no-repeat !important;
-    width: 99px !important;
-    height: 27px !important;
+    opacity: 0 !important; /* Hazlos invisibles si no tienes imagen para ellos, o pon opacity:1 si sí */
 }
+.ds4 .bumper.pressed { opacity: 1 !important; }
 
+/* L2 y R2 */
 .ds4 .triggers {
-    top: 0px !important; /* Posición vertical de L2/R2 */
+    top: 0px !important;
     left: 109px !important;
     width: 588px !important;
 }
@@ -90,5 +109,14 @@
     background: url(https://imgur.com/6vO7PMr.png) !important;
     width: 99px !important;
     height: 100% !important;
-    background-size: cover !important;
+    opacity: 0 !important;
+}
+.ds4 .trigger.pressed, .ds4 .trigger[style*="opacity: 1"] {
+    opacity: 1 !important;
+}
+
+/* === 5. PANEL TÁCTIL (Touchpad) === */
+.ds4 .touchpad {
+    /* El PS5 tiene el touchpad más grande, vamos a ocultar el del PS4 para que no estorbe */
+    display: none !important;
 }
