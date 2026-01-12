@@ -1,111 +1,82 @@
-/* === 1. CONFIGURACIÓN DEL MANDO (PS5 MORADO) === */
-body { background-color: transparent !important; }
-
+/* === 1. SOBRESCRIBIR EL BASE.SVG (El cuerpo del mando) === */
 .controller.ds4 {
+    /* Le decimos: Olvida tu ps4-assets/base.svg, usa MI imagen */
     background: url(https://imgur.com/fLKAl5x.gif) no-repeat center !important;
     background-size: contain !important;
+    /* Ajustamos el tamaño porque tu diseño es más ancho que el original */
     width: 806px !important;
     height: 598px !important;
 }
 
-/* === 2. LIMPIEZA VISUAL (Borrar L2, R2, etc.) === */
-.ds4 .quadrant, 
-.ds4 .trigger:after, .ds4 .trigger:before,
-.ds4 .bumper:after, .ds4 .bumper:before,
-.ds4 .arrows { 
+/* === 2. SOBRESCRIBIR LOS FACE.SVG (Botones X, O, etc) === */
+.ds4 .button {
+    background: url(https://imgur.com/MZNLif9.png) !important;
+    /* Ajustamos tamaño */
+    width: 55px !important; 
+    height: 55px !important;
+}
+
+/* === 3. SOBRESCRIBIR EL DPAD.SVG (Cruceta) === */
+.ds4 .face { 
+    background: url(https://imgur.com/WNF93NX.png) !important; 
+}
+
+/* === 4. SOBRESCRIBIR STICKS.SVG (Palancas) === */
+.ds4 .stick {
+    background: url(https://imgur.com/0i3dnwf.png) !important;
+    width: 100px !important; 
+    height: 100px !important;
+}
+
+/* === 5. BORRAR LO QUE NO SIRVE (Limpieza) === */
+/* Aquí ocultamos las cosas de 'ps4-assets' que estorban en tu diseño */
+.ds4 .quadrant,      /* Borra el Player 1 */
+.ds4 .arrows,        /* Borra flechas */
+.ds4 .trigger:after, /* Borra texto L2 */
+.ds4 .trigger:before,
+.ds4 .bumper:after,  /* Borra texto L1 */
+.ds4 .bumper:before { 
     display: none !important; 
     content: "" !important;
 }
 
-/* === 3. BOTONES DE LA CARA (X, O, Cuadrado, Triángulo) === */
+/* === 6. ACOMODAR TUS HUESOS (Posicionamiento) === */
+/* Como tu mando es PS5, movemos las cajas invisibles para que calcen */
+
+/* Grupo Botones Derecha */
 .ds4 .abxy {
     position: absolute !important;
-    top: 160px !important;   
-    left: 580px !important;  
+    top: 155px !important;    
+    left: 575px !important;   
     width: 170px !important;
     height: 170px !important;
 }
 
-.ds4 .button {
-    background-image: url(https://imgur.com/MZNLif9.png) !important;
-    background-repeat: no-repeat !important;
-    width: 55px !important;
-    height: 55px !important;
-}
-
-/* Posiciones individuales */
-.ds4 .a { bottom: 0px !important; left: 58px !important; background-position: 0 0 !important; }
-.ds4 .b { top: 58px !important; right: -5px !important; background-position: -56px 0 !important; }
-.ds4 .x { top: 58px !important; left: -5px !important; background-position: -112px 0 !important; }
-.ds4 .y { top: 0px !important; left: 58px !important; background-position: 55px 0 !important; }
-
-/* --- CORRECCIÓN DE ANIMACIÓN (AQUÍ ESTABA EL ERROR) --- */
-.ds4 .button.pressed {
-    /* Probamos con negativo y forzamos el cambio */
-    background-position-y: -55px !important; 
-    margin-top: 5px !important;
-    /* Efecto extra: Si la imagen falla, el botón brillará */
-    filter: brightness(1.3) contrast(1.2) !important; 
-}
-
-/* === 4. CRUCETA (D-PAD) === */
+/* Grupo Cruceta Izquierda */
 .ds4 .dpad {
     position: absolute !important;
-    top: 185px !important;
+    top: 180px !important;
     left: 85px !important; 
     width: 125px !important;
     height: 126px !important;
 }
 
-.ds4 .face { 
-    background-image: url(https://imgur.com/WNF93NX.png) !important;
-    background-repeat: no-repeat !important;
-}
-
-.ds4 .face.up { top: -15px !important; left: 44px !important; background-position: -52px 0 !important; }
-.ds4 .face.down { bottom: 0px !important; left: 48px !important; background-position: 0 0 !important; }
-.ds4 .face.left { top: 24px !important; left: 0px !important; background-position: 115px 0 !important; }
-.ds4 .face.right { top: 21px !important; right: -5px !important; background-position: 55px 0 !important; }
-
-/* --- CORRECCIÓN ANIMACIÓN D-PAD --- */
-.ds4 .face.pressed {
-    background-position-y: -52px !important;
-    filter: brightness(1.3) !important;
-}
-
-/* === 5. PALANCAS (STICKS) === */
+/* Grupo Palancas */
 .ds4 .sticks {
     position: absolute !important;
-    top: 315px !important;  
-    left: 228px !important; 
+    top: 315px !important;
+    left: 228px !important;
     width: 361px !important;
-    height: 105px !important;
 }
 
-.ds4 .stick {
-    background: url(https://imgur.com/0i3dnwf.png) !important;
-    width: 100px !important;
-    height: 100px !important;
+/* Ajuste fino individual de botones */
+.ds4 .a { bottom: 0 !important; left: 58px !important; } /* X */
+.ds4 .b { top: 58px !important; right: -8px !important; } /* O */
+.ds4 .x { top: 58px !important; left: -8px !important; }  /* Cuadro */
+.ds4 .y { top: 0 !important; left: 58px !important; }     /* Triangulo */
+
+/* Animación al presionar */
+.ds4 .button.pressed {
+    background-position-y: 55px !important;
+    margin-top: 4px !important;
 }
-
-.ds4 .stick.left { left: -8px !important; }
-.ds4 .stick.right { right: -8px !important; }
-
-/* === 6. GATILLOS Y BUMPERS === */
-.ds4 .bumpers { top: 94px !important; left: 109px !important; width: 588px !important; }
-.ds4 .bumper { 
-    background: url(https://imgur.com/jADiChB.png) no-repeat !important; 
-    opacity: 0 !important; 
-}
-.ds4 .bumper.pressed { opacity: 1 !important; }
-
-.ds4 .triggers { top: 0px !important; left: 109px !important; width: 588px !important; }
-.ds4 .trigger {
-    background: url(https://imgur.com/6vO7PMr.png) !important;
-    width: 99px !important; height: 100% !important;
-    opacity: 0 !important;
-}
-.ds4 .trigger.pressed { opacity: 1 !important; }
-
-/* === 7. EXTRAS === */
-.ds4 .touchpad, .ds4 .meta, .ds4 .back, .ds4 .start { display: none !important; }
